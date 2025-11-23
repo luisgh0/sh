@@ -2807,7 +2807,7 @@ while true; do
 		1)
 			setup_docker_dir
 			check_disk_space $app_size /home/docker
-			read -e -p "アプリケーションの外部サービス ポートを入力し、Enter キーを押してデフォルトで使用します。${docker_port}ポート：" app_port
+			read -e -p "アプリケーションの外部サービス ポートを入力し、Enter キーを押して、それをデフォルトで使用します。${docker_port}ポート：" app_port
 			local app_port=${app_port:-${docker_port}}
 			local docker_port=$app_port
 
@@ -2920,7 +2920,7 @@ docker_app_plus() {
 			1)
 				setup_docker_dir
 				check_disk_space $app_size /home/docker
-				read -e -p "アプリケーションの外部サービス ポートを入力し、Enter キーを押してデフォルトで使用します。${docker_port}ポート：" app_port
+				read -e -p "アプリケーションの外部サービス ポートを入力し、Enter キーを押して、それをデフォルトで使用します。${docker_port}ポート：" app_port
 				local app_port=${app_port:-${docker_port}}
 				local docker_port=$app_port
 				install jq
@@ -3518,7 +3518,7 @@ ldnmp_Proxy_backend_stream() {
 		*) echo "無効な選択"; return 1 ;;
 	esac
 
-	read -e -p "1 つ以上のバックエンド IP + ポートをスペースで区切って入力してください (例: 10.13.0.2:3306 10.13.0.3:3306):" reverseproxy_port
+	read -e -p "1 つ以上のバックエンド IP + ポートをスペースで区切って入力してください (例: 10.13.0.2:3306 10.13.0.3:3306)。" reverseproxy_port
 
 	nginx_install_status
 	cd /home && mkdir -p web/stream.d
@@ -4168,7 +4168,7 @@ frps_panel() {
 
 			8)
 				send_stats "IPアクセスをブロックする"
-				echo "ドメイン名アクセスを逆にしている場合は、この機能を使用して IP+ポート アクセスをブロックすることができ、より安全になります。"
+				echo "ドメイン名アクセスを反転している場合は、この機能を使用して IP+ポート アクセスをブロックすることができ、より安全です。"
 				read -e -p "ブロックするポートを入力してください:" frps_port
 				block_host_port "$frps_port" "$ipv4_address"
 				;;
@@ -5343,7 +5343,7 @@ clamav_scan() {
 		MOUNT_PARAMS+="--mount type=bind,source=${dir},target=/mnt/host${dir} "
 	done
 
-	# clamscan コマンドパラメータを構築する
+	# clamscan コマンドのパラメータを構築する
 	local SCAN_PARAMS=""
 	for dir in "$@"; do
 		SCAN_PARAMS+="/mnt/host${dir} "
@@ -5408,7 +5408,7 @@ clamav() {
 						;;
 					3)
 					  send_stats "カスタムディレクトリスキャン"
-					  read -e -p "スキャンするディレクトリをスペースで区切って入力してください (例: /etc /var /usr /home /root)。" directories
+					  read -e -p "スキャンするディレクトリをスペースで区切って入力してください (例: /etc /var /usr /home /root):" directories
 					  install_docker
 					  clamav_freshclam
 					  clamav_scan $directories
@@ -6358,7 +6358,7 @@ disk_manager() {
 	send_stats "ハードディスク管理機能"
 	while true; do
 		clear
-		echo "ハードディスクのパーティション管理"
+		echo "ハードドライブのパーティション管理"
 		echo -e "${gl_huang}この機能は内部テスト中であるため、運用環境では使用しないでください。${gl_bai}"
 		echo "------------------------"
 		list_partitions
@@ -6377,7 +6377,7 @@ disk_manager() {
 			5) check_partition ;;
 			*) break ;;
 		esac
-		read -e -p "続行するには Enter キーを押してください..."
+		read -e -p "Enter を押して続行します..."
 	done
 }
 
@@ -6406,7 +6406,7 @@ add_task() {
 	read -e -p "ローカル ディレクトリを入力してください:" local_path
 	read -e -p "リモート ディレクトリを入力してください:" remote_path
 	read -e -p "リモート ユーザー@IP を入力してください:" remote
-	read -e -p "SSH ポート (デフォルトは 22) を入力してください:" port
+	read -e -p "SSH ポートを入力してください (デフォルトは 22):" port
 	port=${port:-22}
 
 	echo "認証方法を選択してください:"
@@ -6664,7 +6664,7 @@ rsync_manager() {
 			0) break ;;
 			*) echo "選択が無効です。もう一度お試しください。" ;;
 		esac
-		read -e -p "続行するには Enter キーを押してください..."
+		read -e -p "Enter を押して続行します..."
 	done
 }
 
@@ -7351,7 +7351,7 @@ docker_ssh_migration() {
 
 		echo -e "${YELLOW}バックアップを転送中...${NC}"
 		if [[ -z "$TARGET_PASS" ]]; then
-			# キーでログイン
+			# キーを使用してログインする
 			scp -P "$TARGET_PORT" -o StrictHostKeyChecking=no -r "$LATEST_TAR" "$TARGET_USER@$TARGET_IP:/tmp/"
 		fi
 
@@ -8089,7 +8089,7 @@ linux_ldnmp() {
 	echo -e "${gl_huang}27.  ${gl_bai}AI絵画プロンプトワードジェネレーターをインストールする${gl_huang}28.  ${gl_bai}サイト リバース プロキシ負荷分散"
 	echo -e "${gl_huang}29.  ${gl_bai}ストリーム 4 層プロキシ転送${gl_huang}30.  ${gl_bai}カスタム静的サイト"
 	echo -e "${gl_huang}------------------------"
-	echo -e "${gl_huang}31.  ${gl_bai}サイトデータ管理${gl_huang}★${gl_bai}                    ${gl_huang}32.  ${gl_bai}サイト全体のデータをバックアップする"
+	echo -e "${gl_huang}31.  ${gl_bai}站点数据管理 ${gl_huang}★${gl_bai}                    ${gl_huang}32.  ${gl_bai}サイト全体のデータをバックアップする"
 	echo -e "${gl_huang}33.  ${gl_bai}スケジュールされたリモートバックアップ${gl_huang}34.  ${gl_bai}サイト全体のデータを復元する"
 	echo -e "${gl_huang}------------------------"
 	echo -e "${gl_huang}35.  ${gl_bai}LDNMP環境を保護する${gl_huang}36.  ${gl_bai}LDNMP環境の最適化"
@@ -12647,7 +12647,7 @@ linux_work() {
 	  echo -e "バックエンドワークスペース"
 	  echo -e "システムは、バックグラウンドで永続的に実行できるワークスペースを提供し、長期的なタスクを実行するために使用できます。"
 	  echo -e "SSH を切断しても、ワークスペース内のタスクは中断されず、タスクはバックグラウンドで残ります。"
-	  echo -e "${gl_huang}ヒント：${gl_bai}ワークスペースに入ったら、Ctrl+b を使用し、d だけを押してワークスペースを終了します。"
+	  echo -e "${gl_huang}ヒント：${gl_bai}ワークスペースに入ったら、Ctrl+b を使用し、次に d を単独で押してワークスペースを終了します。"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo "現在存在するワークスペースのリスト"
 	  echo -e "${gl_kjlan}------------------------"
@@ -13092,8 +13092,8 @@ EOF
 						;;
 					2)
 						rm -f /etc/gai.conf
-						echo "IPv6優先に切り替えました"
-						send_stats "IPv6優先に切り替えました"
+						echo "最初にIPv6に切り替えました"
+						send_stats "最初にIPv6に切り替えました"
 						;;
 
 					3)
@@ -14311,7 +14311,7 @@ while true; do
 	  echo -e "${gl_kjlan}------------------------${gl_bai}"
 	  echo -e "${gl_kjlan}サーバーリスト管理${gl_bai}"
 	  echo -e "${gl_kjlan}1.  ${gl_bai}サーバーの追加${gl_kjlan}2.  ${gl_bai}サーバーの削除${gl_kjlan}3.  ${gl_bai}サーバーの編集"
-	  echo -e "${gl_kjlan}4.  ${gl_bai}バックアップクラスター${gl_kjlan}5.  ${gl_bai}クラスターを復元する"
+	  echo -e "${gl_kjlan}4.  ${gl_bai}バックアップクラスタ${gl_kjlan}5.  ${gl_bai}クラスターを復元する"
 	  echo -e "${gl_kjlan}------------------------${gl_bai}"
 	  echo -e "${gl_kjlan}タスクをバッチで実行する${gl_bai}"
 	  echo -e "${gl_kjlan}11. ${gl_bai}テクノロジ ライオン スクリプトをインストールする${gl_kjlan}12. ${gl_bai}アップデートシステム${gl_kjlan}13. ${gl_bai}システムをクリーンアップする"
@@ -14349,7 +14349,7 @@ while true; do
 
 		  4)
 			  clear
-			  send_stats "バックアップクラスター"
+			  send_stats "バックアップクラスタ"
 			  echo -e "変更してください${gl_huang}/root/cluster/servers.py${gl_bai}ファイルをダウンロードしてバックアップを完了してください。"
 			  break_end
 			  ;;

@@ -61,7 +61,7 @@ CheckFirstRun_true() {
 
 # この機能は、機能の埋め込み情報を収集し、現在のスクリプトのバージョン番号、使用時間、システム バージョン、CPU アーキテクチャ、マシンの国、およびユーザーが使用した機能名を記録します。機密情報は含まれませんので、ご安心ください。信じてください！
 # なぜこの機能が設計されたのでしょうか?その目的は、ユーザーが使いたい機能をより深く理解し、機能をさらに最適化し、ユーザーのニーズを満たす機能をさらに投入することです。
-# send_stats 関数の呼び出し位置を全文検索できます。これは透明性があり、オープンソースです。ご心配な場合はご利用をお断りすることも可能です。
+# send_stats 関数の呼び出し位置を全文検索できます。これは透明性があり、オープンソースです。ご不安がある場合はご利用をお断りすることも可能です。
 
 
 
@@ -511,7 +511,7 @@ while true; do
 			docker stop $dockername
 			;;
 		4)
-			send_stats "指定したコンテナを削除します"
+			send_stats "删除指定容器"
 			read -e -p "コンテナ名を入力してください (複数のコンテナ名はスペースで区切ってください):" dockername
 			docker rm -f $dockername
 			;;
@@ -861,7 +861,7 @@ open_port() {
 
 		if ! iptables -C INPUT -p udp --dport $port -j ACCEPT 2>/dev/null; then
 			iptables -I INPUT 1 -p udp --dport $port -j ACCEPT
-			echo "ポートがオープンされました$port"
+			echo "ポートがオープンしました$port"
 		fi
 	done
 
@@ -1099,7 +1099,7 @@ iptables_panel() {
 		  echo "------------------------"
 		  echo "13. DDOS 防御を開始します。 14. DDOS 防御をオフにします。"
 		  echo "------------------------"
-		  echo "15. 指定した国の IP をブロック 16. 指定した国の IP のみを許可"
+		  echo "15. 指定した国の IP をブロックする 16. 指定した国の IP のみを許可する"
 		  echo "17. 指定国における知的財産制限を解除する"
 		  echo "------------------------"
 		  echo "0. 前のメニューに戻る"
@@ -2234,7 +2234,7 @@ web_security() {
 					  send_stats "高負荷により5秒シールドが可能"
 					  echo -e "${gl_huang}Web サイトは 5 分ごとに自動的に検出します。高負荷を検出すると自動的にシールドが開き、低負荷を検出すると5秒間自動的にシールドが閉じます。${gl_bai}"
 					  echo "--------------"
-					  echo "CF パラメータを取得します。"
+					  echo "CFパラメータを取得します。"
 					  echo -e "cf バックエンドの右上隅にある私のプロフィールに移動し、左側で API トークンを選択して、${gl_huang}Global API Key${gl_bai}"
 					  echo -e "cf バックエンド ドメイン名の概要ページの右下に移動して取得します。${gl_huang}エリアID${gl_bai}"
 					  echo "https://dash.cloudflare.com/login"
@@ -2318,7 +2318,7 @@ check_nginx_compression() {
 
 	# zstd がオンでコメントが解除されているかどうかを確認します (行全体が zstd on で始まります)。
 	if grep -qE '^\s*zstd\s+on;' "$CONFIG_FILE"; then
-		zstd_status="zstd圧縮が有効になっています"
+		zstd_status="zstd圧縮がオンになっています"
 	else
 		zstd_status=""
 	fi
@@ -4335,7 +4335,7 @@ frps_panel() {
 
 			8)
 				send_stats "IPアクセスをブロックする"
-				echo "ドメイン名アクセスを反転している場合は、この機能を使用して IP+ポート アクセスをブロックすることができ、より安全です。"
+				echo "ドメイン名アクセスを逆にしている場合は、この機能を使用して IP+ポート アクセスをブロックすることができ、より安全になります。"
 				read -e -p "ブロックするポートを入力してください:" frps_port
 				block_host_port "$frps_port" "$ipv4_address"
 				;;
@@ -4750,7 +4750,7 @@ while true; do
 	echo "2.国内DNSの最適化:"
 	echo " v4: 223.5.5.5 183.60.83.19"
 	echo " v6: 2400:3200::1 2400:da00::6666"
-	echo "3. DNS 構成を手動で編集する"
+	echo "3. DNS 設定を手動で編集する"
 	echo "------------------------"
 	echo "0. 前のメニューに戻る"
 	echo "------------------------"
@@ -6145,7 +6145,7 @@ while true; do
   case $choice in
 	  1)
 		  update_locale "en_US.UTF-8" "en_US.UTF-8"
-		  send_stats "英語に切り替えてください"
+		  send_stats "英語に切り替えて"
 		  ;;
 	  2)
 		  update_locale "zh_CN.UTF-8" "zh_CN.UTF-8"
@@ -6653,7 +6653,7 @@ list_partitions() {
 
 # 永続的にマウントされたパーティション
 mount_partition() {
-	send_stats "パーティションをマウントする"
+	send_stats "パーティションのマウント"
 	read -e -p "マウントするパーティションの名前を入力してください (例: sda1):" PARTITION
 
 	DEVICE="/dev/$PARTITION"
@@ -6830,7 +6830,7 @@ disk_manager() {
 			5) check_partition ;;
 			*) break ;;
 		esac
-		read -e -p "続行するには Enter キーを押してください..."
+		read -e -p "Enter を押して続行します..."
 	done
 }
 
@@ -6859,7 +6859,7 @@ add_task() {
 	read -e -p "ローカル ディレクトリを入力してください:" local_path
 	read -e -p "リモート ディレクトリを入力してください:" remote_path
 	read -e -p "リモート ユーザー@IP を入力してください:" remote
-	read -e -p "SSH ポートを入力してください (デフォルトは 22):" port
+	read -e -p "SSH ポート (デフォルトは 22) を入力してください:" port
 	port=${port:-22}
 
 	echo "認証方法を選択してください:"
@@ -7117,7 +7117,7 @@ rsync_manager() {
 			0) break ;;
 			*) echo "選択が無効です。もう一度お試しください。" ;;
 		esac
-		read -e -p "続行するには Enter キーを押してください..."
+		read -e -p "Enter を押して続行します..."
 	done
 }
 
@@ -7179,7 +7179,7 @@ linux_info() {
 
 	local swap_info=$(free -m | awk 'NR==3{used=$3; total=$2; if (total == 0) {percentage=0} else {percentage=used*100/total}; printf "%dM/%dM (%d%%)", used, total, percentage}')
 
-	local runtime=$(cat /proc/uptime | awk -F. '{run_days=int($1 / 86400);run_hours=int(($1 % 86400) / 3600);run_minutes=int(($1% 3600) / 60); if (run_days > 0) printf("%d day ", run_days); if (run_hours > 0) printf("%d 時間 ", run_hours); printf("%d 分\n", run_ minutes)}')
+	local runtime=$(cat /proc/uptime | awk -F. '{run_days=int($1 / 86400);run_hours=int(($1 % 86400) / 3600);run_minutes=int(($1% 3600) / 60); if (run_days > 0) printf("%d day ", run_days); if (実行時間 > 0) printf("%d 時間 ", 実行時間); printf("%d 分\n", run_ minutes)}')
 
 	local timezone=$(current_timezone)
 
@@ -7198,7 +7198,7 @@ linux_info() {
 	echo -e "${gl_kjlan}CPUコアの数:${gl_bai}$cpu_cores"
 	echo -e "${gl_kjlan}CPU周波数:${gl_bai}$cpu_freq"
 	echo -e "${gl_kjlan}-------------"
-	echo -e "${gl_kjlan}CPU使用率:${gl_bai}$cpu_usage_percent%"
+	echo -e "${gl_kjlan}CPU占用:        ${gl_bai}$cpu_usage_percent%"
 	echo -e "${gl_kjlan}システム負荷:${gl_bai}$load"
 	echo -e "${gl_kjlan}TCP|UDP 接続の数:${gl_bai}$tcp_count|$udp_count"
 	echo -e "${gl_kjlan}物理メモリ:${gl_bai}$mem_info"
@@ -7661,7 +7661,7 @@ docker_ssh_migration() {
 			docker inspect "$c" > "$inspect_file"
 
 			if is_compose_container "$c"; then
-				echo -e "${gl_kjlan}検出されました$cdocker-composeコンテナです${gl_bai}"
+				echo -e "${gl_kjlan}検出されました$cdocker-compose コンテナーです${gl_bai}"
 				local project_dir=$(docker inspect "$c" | jq -r '.[0].Config.Labels["com.docker.compose.project.working_dir"] // empty')
 				local project_name=$(docker inspect "$c" | jq -r '.[0].Config.Labels["com.docker.compose.project"] // empty')
 
@@ -7944,7 +7944,7 @@ linux_docker() {
 	  echo -e "${gl_kjlan}5.   ${gl_bai}Dockerネットワーク管理"
 	  echo -e "${gl_kjlan}6.   ${gl_bai}Docker ボリューム管理"
 	  echo -e "${gl_kjlan}------------------------"
-	  echo -e "${gl_kjlan}7.   ${gl_bai}不要な Docker コンテナをクリーンアップし、ネットワーク データ ボリュームをミラーリングします"
+	  echo -e "${gl_kjlan}7.   ${gl_bai}不要な Docker コンテナをクリーンアップし、ネットワーク データ ボリュームをミラーリングします。"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}8.   ${gl_bai}Dockerソースを変更する"
 	  echo -e "${gl_kjlan}9.   ${gl_bai}daemon.json ファイルを編集する"
@@ -8816,7 +8816,7 @@ linux_ldnmp() {
 	  echo "パスワード: 管理者"
 	  echo "------------------------"
 	  echo "ログイン時に右上隅に赤色の error0 が表示される場合は、次のコマンドを使用してください。"
-	  echo "私も、なぜユニコーンナンバーカードがこれほど面倒で問題が多いのか、非常に腹が立っています。"
+	  echo "私も、なぜユニコーンナンバーカードがこんなに面倒で、問題が多いのか、とても腹が立っています。"
 	  echo "sed -i 's/ADMIN_HTTPS=false/ADMIN_HTTPS=true/g' /home/web/html/$yuming/dujiaoka/.env"
 
 		;;
@@ -9938,7 +9938,7 @@ EOF
 
 		# 5. デフォルトのモデルを選択します
 		echo
-		read -erp "デフォルトのモデル ID (またはシリアル番号。最初のものを使用する場合は空白のままにします) を入力してください。" input_model
+		read -erp "デフォルトのモデル ID (またはシリアル番号、最初のものを使用する場合は空白のままにしておきます) を入力してください:" input_model
 
 		if [[ -z "$input_model" && -n "$available_models" ]]; then
 			default_model=$(echo "$available_models" | head -1)
@@ -10071,7 +10071,7 @@ EOF
 
 			# 2. システムがプリインストールされているかどうかを確認します (重複 ID の競合を防ぐため)。
 			if [ -d "/usr/lib/node_modules/openclaw/extensions/$plugin_name" ]; then
-				echo "💡 プラグインが既にシステム ディレクトリに存在し、直接アクティブ化されていることが検出されました..."
+				echo "💡 プラグインがシステム ディレクトリに既に存在し、直接アクティブ化されていることが検出されました..."
 				openclaw plugins enable "$plugin_name"
 			else
 				echo "📥 公式チャネルを通じてプラグインをダウンロードしてインストールしています..."
@@ -10114,7 +10114,7 @@ EOF
 			echo "- [whatsapp] #WhatsApp オートメーション"
 			echo ""
 			echo "🧠 メモリと AI:"
-			echo "- [memory-core] # 基本メモリ (ファイル検索)"
+			echo "- [memory-core] # 基本メモリ (ファイル取得)"
 			echo "- [memory-lancedb] # メモリの強化 (ベクターデータベース)"
 			echo "- [copilot-proxy] # コパイロットインターフェイスの転送"
 			echo ""
@@ -10205,7 +10205,7 @@ EOF
 			echo "things-mac # Things 3 タスク管理の緊密な統合"
 			echo "bluebubbles # BlueBubbles で iMessage を完璧に送受信"
 			echo "ヒマラヤ # 端末メール管理（IMAP/SMTP強力ツール）"
-			echo "要約 # ウェブページ/ポッドキャスト/YouTube ビデオ コンテンツのワンクリック要約"
+			echo "要約 # Web ページ/ポッドキャスト/YouTube ビデオ コンテンツのワンクリック要約"
 			echo "openhue # Philips Hue スマート照明シーンを制御する"
 			echo "video-frames # ビデオフレーム抽出とショートクリップ編集 (ffmpeg ドライバー)"
 			echo "openai-whisper # ローカル音声をテキストに変換 (オフラインのプライバシー保護)"
@@ -10546,7 +10546,7 @@ while true; do
 	  echo -e "${gl_kjlan}-------------------------"
 	  echo -e "${gl_kjlan}81.  ${color81}JitsiMeet ビデオ会議${gl_kjlan}82.  ${color82}gpt-load 高性能 AI 透過プロキシ"
 	  echo -e "${gl_kjlan}83.  ${color83}komariサーバー監視ツール${gl_kjlan}84.  ${color84}Wallos の個人財務管理ツール"
-	  echo -e "${gl_kjlan}85.  ${color85}イミッチピクチャービデオマネージャー${gl_kjlan}86.  ${color86}ジェリーフィンメディア管理システム"
+	  echo -e "${gl_kjlan}85.  ${color85}イミッチ・ピクチャー・ビデオ・マネージャー${gl_kjlan}86.  ${color86}ジェリーフィンメディア管理システム"
 	  echo -e "${gl_kjlan}87.  ${color87}SyncTV は一緒に映画を見るための素晴らしいツールです${gl_kjlan}88.  ${color88}Owncast の自己ホスト型ライブ ストリーミング プラットフォーム"
 	  echo -e "${gl_kjlan}89.  ${color89}FileCodeBox ファイルエクスプレス${gl_kjlan}90.  ${color90}マトリックス分散型チャットプロトコル"
 	  echo -e "${gl_kjlan}-------------------------"
@@ -10788,7 +10788,7 @@ while true; do
 			check_docker_app
 			check_docker_image_update $docker_name
 			clear
-			echo -e "ネザモニタリング$check_docker $update_status"
+			echo -e "ネザ監視$check_docker $update_status"
 			echo "オープンソースの軽量で使いやすいサーバー監視および運用保守ツール"
 			echo "公式 Web サイト構築ドキュメント: https://nezha.wiki/guide/dashboard.html"
 			if docker ps -a --format '{{.Names}}' 2>/dev/null | grep -q "$docker_name"; then
@@ -10797,7 +10797,7 @@ while true; do
 			fi
 			echo ""
 			echo "------------------------"
-			echo "1. 使用方法"
+			echo "1. 使用する"
 			echo "------------------------"
 			echo "0. 前のメニューに戻る"
 			echo "------------------------"
@@ -12882,7 +12882,7 @@ while true; do
 
 		  local app_id="80"
 		  local app_name="リンクワーデンのブックマーク管理"
-		  local app_text="タグ付け、検索、チーム コラボレーションをサポートするオープンソースの自己ホスト型ブックマーク管理プラットフォーム。"
+		  local app_text="タグ付け、検索、チーム コラボレーションをサポートする、オープン ソースの自己ホスト型ブックマーク管理プラットフォーム。"
 		  local app_url="公式サイト：https://linkwarden.app/"
 		  local docker_name="linkwarden-linkwarden-1"
 		  local docker_port="8080"
@@ -13097,7 +13097,7 @@ while true; do
 	  85|immich)
 
 		  local app_id="85"
-		  local app_name="イミッチピクチャービデオマネージャー"
+		  local app_name="イミッチ・ピクチャー・ビデオ・マネージャー"
 		  local app_text="高性能の自己ホスト型写真およびビデオ管理ソリューション。"
 		  local app_url="公式サイト紹介：${gh_https_url}github.com/immich-app/immich"
 		  local docker_name="immich_server"
@@ -13221,7 +13221,7 @@ while true; do
 
 		}
 
-		local docker_describe="オープンソースの無料の自作ライブ ブロードキャスト プラットフォーム"
+		local docker_describe="オープンソース、無料の自社構築ライブ ブロードキャスト プラットフォーム"
 		local docker_url="公式サイト紹介：https://owncast.online"
 		local docker_use="echo \"管理者ページにアクセスするには、アクセス アドレスの後に /admin を続けます\""
 		local docker_passwd="echo \"初期アカウント: admin 初期パスワード: abc123 ログイン後、時間内にログイン パスワードを変更してください\""
@@ -14350,7 +14350,7 @@ linux_work() {
 	  echo -e "${gl_kjlan}2.   ${gl_bai}作業エリア 2"
 	  echo -e "${gl_kjlan}3.   ${gl_bai}作業エリア 3"
 	  echo -e "${gl_kjlan}4.   ${gl_bai}作業エリア 4"
-	  echo -e "${gl_kjlan}5.   ${gl_bai}作業エリア5"
+	  echo -e "${gl_kjlan}5.   ${gl_bai}ワークスペースNo.5"
 	  echo -e "${gl_kjlan}6.   ${gl_bai}作業エリア6"
 	  echo -e "${gl_kjlan}7.   ${gl_bai}作業エリア 7"
 	  echo -e "${gl_kjlan}8.   ${gl_bai}作業エリア8"
@@ -14665,7 +14665,7 @@ net_menu() {
 				else
 					echo "✘ ネットワークカードが存在しません"
 				fi
-				read -erp "続行するには Enter キーを押してください..."
+				read -erp "Enter を押して続行します..."
 				;;
 			2)
 				send_stats "ネットワークカードを無効にする"
@@ -14675,7 +14675,7 @@ net_menu() {
 				else
 					echo "✘ ネットワークカードが存在しません"
 				fi
-				read -erp "続行するには Enter キーを押してください..."
+				read -erp "Enter を押して続行します..."
 				;;
 			3)
 				send_stats "ネットワークカードの詳細を表示する"
@@ -14687,7 +14687,7 @@ net_menu() {
 				else
 					echo "✘ ネットワークカードが存在しません"
 				fi
-				read -erp "続行するには Enter キーを押してください..."
+				read -erp "Enter を押して続行します..."
 				;;
 			4)
 				send_stats "ネットワークカード情報を更新する"
@@ -14713,7 +14713,7 @@ log_menu() {
 		echo "[/var/logディレクトリ占有]"
 		du -sh /var/log 2>/dev/null
 		echo
-		echo "【日記帳の職業】"
+		echo "【日記ログ職業】"
 		journalctl --disk-usage 2>/dev/null
 		echo "========================================"
 	}
@@ -14723,7 +14723,7 @@ log_menu() {
 		show_log_overview
 		echo
 		echo "=========== システムログ管理メニュー ==========="
-		echo "1. 最新のシステムログ（ジャーナル）を表示する"
+		echo "1. 最新のシステムログ（ジャーナル）を確認する"
 		echo "2. 指定したサービスログを表示します。"
 		echo "3. ログイン/セキュリティログの表示"
 		echo "4. リアルタイム追跡ログ"
@@ -14738,7 +14738,7 @@ log_menu() {
 				read -erp "最新のログ行を表示しますか? [デフォルト 100]:" lines
 				lines=${lines:-100}
 				journalctl -n "$lines" --no-pager
-				read -erp "続行するには Enter キーを押してください..."
+				read -erp "Enter を押して続行します..."
 				;;
 			2)
 				send_stats "指定したサービスログを表示する"
@@ -14748,7 +14748,7 @@ log_menu() {
 				else
 					echo "✘ サービスが存在しないか、ログがありません"
 				fi
-				read -erp "続行するには Enter キーを押してください..."
+				read -erp "Enter を押して続行します..."
 				;;
 			3)
 				send_stats "ログイン/セキュリティログの表示"
@@ -14763,7 +14763,7 @@ log_menu() {
 				else
 					echo "セキュリティログファイルが見つかりません"
 				fi
-				read -erp "続行するには Enter キーを押してください..."
+				read -erp "Enter を押して続行します..."
 				;;
 			4)
 				send_stats "リアルタイム追跡ログ"
@@ -14851,7 +14851,7 @@ env_menu() {
 
 		echo
 		echo "==============================================="
-		read -erp "続行するには Enter キーを押してください..."
+		read -erp "Enter を押して続行します..."
 	}
 
 
@@ -14866,7 +14866,7 @@ env_menu() {
 		else
 			echo "ファイルが存在しません:$file"
 		fi
-		read -erp "続行するには Enter キーを押してください..."
+		read -erp "Enter を押して続行します..."
 	}
 
 	edit_file() {
@@ -14882,7 +14882,7 @@ env_menu() {
 		source "$BASHRC"
 		source "$PROFILE"
 		echo "✔ 環境変数がリロードされました"
-		read -erp "続行するには Enter キーを押してください..."
+		read -erp "Enter を押して続行します..."
 	}
 
 	while true; do
@@ -14893,7 +14893,7 @@ env_menu() {
 		echo "1. 現在一般的に使用されている環境変数を確認します。"
 		echo "2. ~/.bashrc を表示する"
 		echo "3. ~/.profile を表示する"
-		echo "4. ~/.bashrc を編集します"
+		echo "4. ~/.bashrc を編集する"
 		echo "5. ~/.profile を編集する"
 		echo "6. 環境変数（ソース）をリロードします。"
 		echo "--------------------------------------"
@@ -15474,7 +15474,7 @@ EOF
 				# 現在のシステムのタイムゾーンを取得する
 				local timezone=$(current_timezone)
 
-				# 現在のシステム時刻を取得します
+				# 現在のシステム時刻を取得する
 				local current_time=$(date +"%Y-%m-%d %H:%M:%S")
 
 				# タイムゾーンと時間を表示する
@@ -15489,7 +15489,7 @@ EOF
 				echo "3. 東京、日本時間 4. ソウル、韓国時間"
 				echo "5. シンガポール時間 6. インド、コルカタ時間"
 				echo "7. アラブ首長国連邦、ドバイ時間 8. オーストラリア、シドニー時間"
-				echo "9.タイ・バンコク時間"
+				echo "9. タイ・バンコク時間"
 				echo "------------------------"
 				echo "ヨーロッパ"
 				echo "11. ロンドン、イギリス時間 12. パリ、フランス時間"
@@ -15969,7 +15969,7 @@ EOF
 			  echo "ワンストップのシステムチューニング"
 			  echo "------------------------------------------------"
 			  echo "以下のコンテンツを運用・最適化していきます"
-			  echo "1. システムアップデートソースを最適化し、システムを最新の状態にアップデートします。"
+			  echo "1. システムアップデートソースを最適化し、システムを最新にアップデートします。"
 			  echo "2. システムジャンクファイルをクリーンアップする"
 			  echo -e "3. 仮想メモリを設定する${gl_huang}1G${gl_bai}"
 			  echo -e "4. SSH ポート番号を次のように設定します。${gl_huang}5522${gl_bai}"
@@ -16417,7 +16417,7 @@ while true; do
 	  echo -e "${gl_kjlan}------------------------${gl_bai}"
 	  echo -e "${gl_kjlan}サーバーリスト管理${gl_bai}"
 	  echo -e "${gl_kjlan}1.  ${gl_bai}サーバーの追加${gl_kjlan}2.  ${gl_bai}サーバーの削除${gl_kjlan}3.  ${gl_bai}サーバーの編集"
-	  echo -e "${gl_kjlan}4.  ${gl_bai}バックアップクラスタ${gl_kjlan}5.  ${gl_bai}クラスターを復元する"
+	  echo -e "${gl_kjlan}4.  ${gl_bai}バックアップクラスター${gl_kjlan}5.  ${gl_bai}クラスターを復元する"
 	  echo -e "${gl_kjlan}------------------------${gl_bai}"
 	  echo -e "${gl_kjlan}タスクをバッチで実行する${gl_bai}"
 	  echo -e "${gl_kjlan}11. ${gl_bai}テクノロジ ライオン スクリプトをインストールする${gl_kjlan}12. ${gl_bai}アップデートシステム${gl_kjlan}13. ${gl_bai}システムをクリーンアップする"
@@ -16455,7 +16455,7 @@ while true; do
 
 		  4)
 			  clear
-			  send_stats "バックアップクラスタ"
+			  send_stats "バックアップクラスター"
 			  echo -e "変更してください${gl_huang}/root/cluster/servers.py${gl_bai}ファイルをダウンロードしてバックアップを完了してください。"
 			  break_end
 			  ;;
@@ -16654,7 +16654,7 @@ while true; do
 	fi
 
 	echo "------------------------"
-	echo "1. 今すぐ更新します 2. 自動更新をオンにします 3. 自動更新をオフにします"
+	echo "1. 今すぐ更新します。 2. 自動更新をオンにします。 3. 自動更新をオフにします。"
 	echo "------------------------"
 	echo "0. メインメニューに戻る"
 	echo "------------------------"

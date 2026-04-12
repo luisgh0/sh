@@ -9774,7 +9774,7 @@ moltbot_menu() {
 		local api_key="$3"
 		local config_file="${HOME}/.openclaw/openclaw.json"
 
-		echo "🔍 正在獲取$provider_name的所有可用模型..."
+		echo "🔍 正在獲取$provider_name 的所有可用模型..."
 
 		# 取得模型列表
 		local models_json=$(curl -s -m 10 \
@@ -16247,7 +16247,7 @@ linux_file() {
 				send_stats "壓縮檔案/目錄"
 				;;
 			22) # 解压文件/目录
-				read -e -p "請輸入要解壓縮的檔案名稱 (.tar.gz):" filename
+				read -e -p "請輸入要解壓縮的檔名 (.tar.gz):" filename
 				install tar
 				tar -xzvf "$filename" && echo "已解壓縮$filename" || echo "解壓縮失敗"
 				send_stats "解壓縮檔案/目錄"

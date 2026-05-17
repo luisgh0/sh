@@ -1563,7 +1563,7 @@ certs_status() {
 
 			mkdir -p /home/web/certs
 
-			# 1. 輸入憑證 (ECC 和 RSA 憑證開頭都是 BEGIN CERTIFICATE)
+			# 1. 输入证书 (ECC 和 RSA 证书开头都是 BEGIN CERTIFICATE)
 			echo "請貼上 證書 (CRT/PEM) 內容 (以兩次回車結束)："
 			local cert_content=""
 			while IFS= read -r line; do
@@ -2209,7 +2209,7 @@ web_security() {
 
 				  21)
 					  send_stats "cloudflare模式"
-					  echo "到cf後台右上角我的個人資料，選擇左側API令牌，取得Global API Key"
+					  echo "到cf后台右上角我的个人资料，选择左侧API令牌，获取Global API Key"
 					  echo "https://dash.cloudflare.com/login"
 					  read -e -p "輸入CF的帳號:" cfuser
 					  read -e -p "輸入CF的Global API Key:" cftoken
@@ -3147,7 +3147,7 @@ tmux_run_d() {
 local base_name="tmuxd"
 local tmuxd_ID=1
 
-# 檢查會話是否存在的函數
+# 检查会话是否存在的函数
 session_exists() {
   tmux has-session -t $1 2>/dev/null
 }
@@ -3628,7 +3628,7 @@ stream_panel() {
 				;;
 			6)
 				send_stats "刪除轉送配置"
-				read -e -p "請輸入你要刪除的服務名稱:" stream_name
+				read -e -p "请输入你要删除的服务名: " stream_name
 				rm /home/web/stream.d/$stream_name.conf > /dev/null 2>&1
 				docker restart nginx
 				send_stats "刪除四層代理"
@@ -4089,7 +4089,7 @@ remote_port = ${remote_port}
 EOF
 
 	# 輸出產生的信息
-	echo "服務$service_name已成功加入 frpc.toml"
+	echo "服務$service_name已成功加入到 frpc.toml"
 
 	docker restart frpc
 
@@ -5720,7 +5720,7 @@ elrepo() {
 		  echo "影片介紹: https://www.bilibili.com/video/BV1mH4y1w7qA?t=529.2"
 		  echo "------------------------------------------------"
 		  echo "僅支援紅帽系列發行 CentOS/RedHat/Alma/Rocky/oracle"
-		  echo "升級Linux核心可提升系統效能與安全，建議有條件的嘗試，生產環境謹慎升級！"
+		  echo "升级Linux内核可提升系统性能和安全，建议有条件的尝试，生产环境谨慎升级！"
 		  echo "------------------------------------------------"
 		  read -e -p "確定繼續嗎？ (Y/N):" choice
 
@@ -5883,7 +5883,7 @@ optimize_high_performance() {
 	sysctl -w kernel.sched_autogroup_enabled=0 2>/dev/null
 
 	echo -e "${gl_lv}其他優化...${gl_bai}"
-	# 禁用透明大頁面，減少延遲
+	# 禁用透明大页面，减少延迟
 	echo never > /sys/kernel/mm/transparent_hugepage/enabled
 	# 禁用 NUMA balancing
 	sysctl -w kernel.numa_balancing=0 2>/dev/null
@@ -6102,7 +6102,7 @@ update_locale() {
 				locale-gen
 				echo "LANG=${lang}" > /etc/default/locale
 				export LANG=${lang}
-				echo -e "${gl_lv}系統語言已經修改為:$lang重新連線SSH生效。${gl_bai}"
+				echo -e "${gl_lv}系統語言已經修改為:$lang 重新连接SSH生效。${gl_bai}"
 				hash -r
 				break_end
 
@@ -7863,7 +7863,7 @@ docker_ssh_migration() {
 
 		read -e -p  "目標伺服器IP:" TARGET_IP
 		read -e -p  "目標伺服器SSH用戶名:" TARGET_USER
-		read -e -p "目標伺服器SSH連接埠 [預設22]:" TARGET_PORT
+		read -e -p "目标服务器SSH端口 [默认22]: " TARGET_PORT
 		local TARGET_PORT=${TARGET_PORT:-22}
 
 		local LATEST_TAR="$BACKUP_DIR"
@@ -9063,7 +9063,7 @@ linux_ldnmp() {
 			  echo
 			  ;;
 		  2)
-			  echo "資料庫備份必須是.gz結尾的壓縮包。請放到/home/目錄下，支援寶塔/1panel備份資料導入。"
+			  echo "資料庫備份必須是.gz結尾的壓縮包。请放到/home/目录下，支持宝塔/1panel备份数据导入。"
 			  read -e -p "也可以輸入下載鏈接，遠端下載備份數據，直接回車將跳過遠端下載：" url_download_db
 
 			  cd /home/
@@ -10035,8 +10035,8 @@ EOF
 			echo "----------------------------------------"
 
 			# 輸出推薦的實用外掛程式列表，方便用戶複製
-			echo "建議的實用外掛程式（可直接複製名稱輸入）："
-			echo "feishu # 飛書/Lark 整合 (目前已載入 ✓)"
+			echo "推荐的实用插件（可直接复制名称输入）："
+			echo "feishu                # 飞书/Lark 集成 (当前已加载 ✓)"
 			echo "telegram # Telegram 機器人整合 (目前已載入 ✓)"
 			echo "memory-core # 核心記憶增強：基於檔案的上下文搜尋 (目前已載入 ✓)"
 			echo "@openclaw/slack # Slack 頻道與 DMs 深度連接"
@@ -10055,7 +10055,7 @@ EOF
 
 			# 1. 檢查是否輸入 0 退出
 			if [ "$plugin_name" = "0" ]; then
-				echo "操作已取消，退出插件安裝。"
+				echo "操作已取消，退出插件安装。"
 				break
 			fi
 
@@ -10133,7 +10133,7 @@ EOF
 			local plugin_id=$(echo "$raw_input" | sed 's|^@openclaw/||')
 			local plugin_full="$raw_input"
 
-			echo "🔍 正在檢查插件狀態..."
+			echo "🔍 正在检查插件状态..."
 
 			# 2. 檢查是否已經在 list 中且為 disabled (最常見的情況)
 			if echo "$plugin_list" | grep -qw "$plugin_id" && echo "$plugin_list" | grep "$plugin_id" | grep -q "disabled"; then
@@ -10234,7 +10234,7 @@ EOF
 
 			# 取得上一條指令的退出狀態
 			if [ $? -eq 0 ]; then
-				echo "✅ 技能$skill_name安裝成功。"
+				echo "✅ 技能 $skill_name安裝成功。"
 				# 執行重啟/啟動服務邏輯
 				start_gateway
 			else
@@ -10343,7 +10343,7 @@ EOF
 
 		domains=$(openclaw_find_webui_domain)
 		if [ -n "$domains" ]; then
-			echo "網域名稱地址："
+			echo "網域地址："
 			echo "$domains" | while read d; do
 				echo "https://${d}/#token=${token}"
 			done
@@ -14033,7 +14033,7 @@ discourse,yunsou,ahhhhfs,nsgame,gying" \
 	  108|langbot)
 		local app_id="108"
 		local app_name="LangBot聊天機器人"
-		local app_text="是一個開源的大語言模式原生即時通訊機器人開發平台"
+		local app_text="是一个开源的大语言模型原生即时通信机器人开发平台"
 		local app_url="官方網站:${gh_https_url}github.com/langbot-app/LangBot"
 		local docker_name="langbot_plugin_runtime"
 		local docker_port="8108"

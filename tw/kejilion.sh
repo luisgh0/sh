@@ -318,7 +318,7 @@ stop() {
 	if [ $? -eq 0 ]; then
 		echo "$1服務已停止。"
 	else
-		echo "错误：停止 $1服務失敗。"
+		echo "錯誤：停止$1服務失敗。"
 	fi
 }
 
@@ -1316,7 +1316,7 @@ install_ldnmp_conf() {
   wget -O /home/web/docker-compose.yml ${gh_proxy}raw.githubusercontent.com/kejilion/docker/main/LNMP-docker-compose-10.yml
   dbrootpasswd=$(openssl rand -base64 16) ; dbuse=$(openssl rand -hex 4) ; dbusepasswd=$(openssl rand -base64 8)
 
-  # 在 docker-compose.yml 文件中进行替换
+  # 在 docker-compose.yml 檔案中進行替換
   sed -i "s#webroot#$dbrootpasswd#g" /home/web/docker-compose.yml
   sed -i "s#kejilionYYDS#$dbusepasswd#g" /home/web/docker-compose.yml
   sed -i "s#kejilion#$dbuse#g" /home/web/docker-compose.yml
@@ -1816,7 +1816,7 @@ nginx_waf() {
 		wget -O /home/web/nginx.conf "${gh_proxy}raw.githubusercontent.com/kejilion/nginx/main/nginx10.conf"
 	fi
 
-	# 根据 mode 参数来决定开启或关闭 WAF
+	# 根據 mode 參數決定開啟或關閉 WAF
 	if [ "$mode" == "on" ]; then
 		# 開啟 WAF：去掉註釋
 		sed -i 's|# load_module /etc/nginx/modules/ngx_http_modsecurity_module.so;|load_module /etc/nginx/modules/ngx_http_modsecurity_module.so;|' /home/web/nginx.conf > /dev/null 2>&1
@@ -1985,7 +1985,7 @@ nginx_br() {
 		sed -i '/brotli_types/,+6 s/^\(\s*\)#\s*/\1/' /home/web/nginx.conf
 
 	elif [ "$mode" == "off" ]; then
-		# 关闭 Brotli：加上注释
+		# 關閉 Brotli：加上註釋
 		sed -i 's|^load_module /etc/nginx/modules/ngx_http_brotli_filter_module.so;|# load_module /etc/nginx/modules/ngx_http_brotli_filter_module.so;|' /home/web/nginx.conf > /dev/null 2>&1
 		sed -i 's|^load_module /etc/nginx/modules/ngx_http_brotli_static_module.so;|# load_module /etc/nginx/modules/ngx_http_brotli_static_module.so;|' /home/web/nginx.conf > /dev/null 2>&1
 
@@ -2332,7 +2332,7 @@ check_nginx_compression() {
 
 	# 檢查 gzip 是否開啟且未被註釋
 	if grep -qE '^\s*gzip\s+on;' "$CONFIG_FILE"; then
-		gzip_status=" gzip压缩已开启"
+		gzip_status="gzip壓縮已開啟"
 	else
 		gzip_status=""
 	fi
@@ -2351,8 +2351,8 @@ web_optimization() {
 			  echo "------------------------"
 			  echo "1. 標準模式 2. 高效能模式 (建議2H4G以上)"
 			  echo "------------------------"
-			  echo "3. 开启gzip压缩          4. 关闭gzip压缩"
-			  echo "5. 开启br压缩            6. 关闭br压缩"
+			  echo "3. 開啟gzip壓縮 4. 關閉gzip壓縮"
+			  echo "5. 開啟br壓縮 6. 關閉br壓縮"
 			  echo "7. 開啟zstd壓縮 8. 關閉zstd壓縮"
 			  echo "------------------------"
 			  echo "0. 返回上一級選單"
@@ -2538,7 +2538,7 @@ check_docker_image_update() {
 	local container_name=$1
 	update_status=""
 
-	# 1. 区域检查
+	# 1. 區域檢查
 	local country=$(curl -s --max-time 2 ipinfo.io/country)
 	[[ "$country" == "CN" ]] && return
 
@@ -2604,7 +2604,7 @@ block_container_port() {
 	install iptables
 
 
-	# 检查并封禁其他所有 IP
+	# 檢查並封鎖其他所有 IP
 	if ! iptables -C DOCKER-USER -p tcp -d "$container_ip" -j DROP &>/dev/null; then
 		iptables -I DOCKER-USER -p tcp -d "$container_ip" -j DROP
 	fi
@@ -2793,7 +2793,7 @@ clear_host_port_rules() {
 		iptables -D INPUT -p tcp --dport "$port" -s 127.0.0.0/8 -j ACCEPT
 	fi
 
-	# 清除允许指定 IP 访问的规则
+	# 清除允許指定 IP 存取的規則
 	if iptables -C INPUT -p tcp --dport "$port" -s "$allowed_ip" -j ACCEPT &>/dev/null; then
 		iptables -D INPUT -p tcp --dport "$port" -s "$allowed_ip" -j ACCEPT
 	fi
@@ -3415,7 +3415,7 @@ ldnmp_wp() {
 
 ldnmp_Proxy() {
 	clear
-	webname="反向代理-IP+端口"
+	webname="反向代理-IP+埠"
 	yuming="${1:-}"
 	reverseproxy="${2:-}"
 	port="${3:-}"
@@ -3549,7 +3549,7 @@ list_stream_services() {
 			proto="tcp"
 		fi
 
-		# 拼接监听 IP:端口
+		# 拼接監聽 IP:端口
 		local_addr="$local_ip:$listen_port"
 
 		printf "%-22s %-14s %-21s %-20s\n" "$service_name" "$proto" "$local_addr" "$backend"
@@ -3651,13 +3651,13 @@ ldnmp_Proxy_backend_stream() {
 	echo "開始部署$webname"
 
 	# 取得代理名稱
-	read -erp "请输入代理转发名称 (如 mysql_proxy): " proxy_name
+	read -erp "請輸入代理轉發名稱 (如 mysql_proxy):" proxy_name
 	if [ -z "$proxy_name" ]; then
-		echo "名称不能为空"; return 1
+		echo "名稱不能為空"; return 1
 	fi
 
-	# 获取监听端口
-	read -erp "请输入本机监听端口 (如 3306): " listen_port
+	# 取得監聽埠
+	read -erp "請輸入本機監聽埠 (如 3306):" listen_port
 	if ! [[ "$listen_port" =~ ^[0-9]+$ ]]; then
 		echo "連接埠必須是數字"; return 1
 	fi
@@ -4214,7 +4214,7 @@ generate_access_urls() {
 	if [ "$has_valid_ports" = true ]; then
 		echo "FRP服務對外存取位址:"
 
-		# 处理 IPv4 地址
+		# 處理 IPv4 位址
 		for port in "${ports[@]}"; do
 			if [[ $port != "8055" && $port != "8056" ]]; then
 				echo "http://${ipv4_address}:${port}"
@@ -4950,7 +4950,7 @@ fetch_remote_ssh_keys() {
 			return 1
 		}
 	else
-		echo "错误：系统中未找到 curl 或 wget，无法下载公钥" >&2
+		echo "錯誤：系統中未找到 curl 或 wget，無法下載公鑰" >&2
 		rm -f "${temp_file}"
 		return 1
 	fi
@@ -6186,7 +6186,7 @@ break_end
 
 shell_bianse() {
   root_use
-  send_stats "命令行美化工具"
+  send_stats "命令列美化工具"
   while true; do
 	clear
 	echo "命令列美化工具"
@@ -6919,7 +6919,7 @@ add_task() {
 
 	install rsync rsync
 
-	echo "任务已保存!"
+	echo "任務已儲存!"
 }
 
 # 刪除任務
@@ -7359,7 +7359,7 @@ linux_tools() {
 			  install iftop
 			  clear
 			  iftop
-			  send_stats "安装iftop"
+			  send_stats "安裝iftop"
 			  ;;
 			7)
 			  clear
@@ -7367,7 +7367,7 @@ linux_tools() {
 			  clear
 			  echo "工具已安裝，使用方法如下："
 			  unzip
-			  send_stats "安装unzip"
+			  send_stats "安裝unzip"
 			  ;;
 			8)
 			  clear
@@ -7840,7 +7840,7 @@ docker_ssh_migration() {
 
 		# 還原 /home/docker 下的文件
 		if [ -f "$BACKUP_DIR/home_docker_files.tar.gz" ]; then
-			echo -e "${gl_kjlan}正在还原 /home/docker 下的文件...${gl_bai}"
+			echo -e "${gl_kjlan}正在還原 /home/docker 下的檔案...${gl_bai}"
 			mkdir -p /home/docker
 			tar -xzf "$BACKUP_DIR/home_docker_files.tar.gz" -C /
 			echo -e "${gl_lv}/home/docker 下的檔案已還原完成${gl_bai}"
@@ -9674,7 +9674,7 @@ moltbot_menu() {
 		echo -e "ClawdBot > MoltBot > OpenClaw 管理"
 		echo -e "$install_status $running_status $update_message"
 		echo "======================================="
-		echo "1.  安装"
+		echo "1. 安裝"
 		echo "2. 啟動"
 		echo "3. 停止"
 		echo "--------------------"
@@ -9936,9 +9936,9 @@ EOF
 			fi
 		fi
 
-		# 5. 选择默认模型
+		# 5. 選擇預設模型
 		echo
-		read -erp "请输入默认 Model ID (或序号，留空则使用第一个): " input_model
+		read -erp "請輸入預設 Model ID (或序號，留空則使用第一個):" input_model
 
 		if [[ -z "$input_model" && -n "$available_models" ]]; then
 			default_model=$(echo "$available_models" | head -1)
@@ -9960,7 +9960,7 @@ EOF
 		echo "模型總數 :$model_count"
 		echo "======================"
 
-		read -erp "確認添加所有$model_count個模型？ (y/N):" confirm
+		read -erp "確認添加所有$model_count个模型？ (y/N):" confirm
 		if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
 			echo "❎ 已取消"
 			return 1
@@ -10034,7 +10034,7 @@ EOF
 			openclaw plugins list
 			echo "----------------------------------------"
 
-			# 输出推荐的实用插件列表，便于用户复制
+			# 輸出推薦的實用外掛程式列表，方便用戶複製
 			echo "建議的實用外掛程式（可直接複製名稱輸入）："
 			echo "feishu # 飛書/Lark 整合 (目前已載入 ✓)"
 			echo "telegram # Telegram 機器人整合 (目前已載入 ✓)"
@@ -10061,7 +10061,7 @@ EOF
 
 			# 2. 驗證輸入是否為空
 			if [ -z "$plugin_name" ]; then
-				echo "错误：插件名称不能为空，请重新输入。"
+				echo "錯誤：插件名稱不能為空，請重新輸入。"
 				echo ""
 				continue
 			fi
@@ -10071,7 +10071,7 @@ EOF
 
 			# 2. 檢查系統是否已預先安裝（防止 duplicate id 衝突）
 			if [ -d "/usr/lib/node_modules/openclaw/extensions/$plugin_name" ]; then
-				echo "💡 检测到系统目录已存在该插件，正在直接激活..."
+				echo "💡 偵測到系統目錄已存在該插件，正在直接啟動..."
 				openclaw plugins enable "$plugin_name"
 			else
 				echo "📥 正在透過官方管道下載安裝插件..."
@@ -10160,7 +10160,7 @@ EOF
 					echo "⚠️ 官方頻道下載失敗，嘗試備選方案..."
 					# 備選 npm 安裝
 					if npm install -g "$plugin_full" --unsafe-perm; then
-						echo "✅ npm 安装成功，尝试启用..."
+						echo "✅ npm 安裝成功，嘗試啟用..."
 						openclaw plugins enable "$plugin_id"
 					else
 						echo "❌ 嚴重錯誤：無法取得該外掛程式。請檢查 ID 是否正確或網路是否可用。"
@@ -10202,7 +10202,7 @@ EOF
 			echo "apple-reminders # macOS 提醒事項管理 (待辦事項清單)"
 			echo "1password # 自動化讀取和注入 1Password 金鑰"
 			echo "gog # Google Workspace (Gmail/雲端盤/文件) 全能助手"
-			echo "things-mac         # 深度整合 Things 3 任务管理"
+			echo "things-mac # 深度整合 Things 3 任務管理"
 			echo "bluebubbles # 透過 BlueBubbles 完美收發 iMessage"
 			echo "himalaya # 終端郵件管理 (IMAP/SMTP 強力工具)"
 			echo "summarize # 網頁/播客/YouTube 影片內容一鍵總結"
@@ -10238,7 +10238,7 @@ EOF
 				# 執行重啟/啟動服務邏輯
 				start_gateway
 			else
-				echo "❌ 安裝失敗。请检查技能名称是否正确，或参考文档排查。"
+				echo "❌ 安裝失敗。請檢查技能名稱是否正確，或參考文件排查。"
 			fi
 
 			break_end
@@ -11510,7 +11510,7 @@ while true; do
 		}
 
 		local docker_describe="QD-Today是HTTP請求定時任務自動執行框架"
-		local docker_url="官網介紹: https://qd-today.github.io/qd/zh_CN/"
+		local docker_url="官网介绍: https://qd-today.github.io/qd/zh_CN/"
 		local docker_use=""
 		local docker_passwd=""
 		local app_size="1"
@@ -11680,7 +11680,7 @@ while true; do
 
 		}
 
-		local docker_describe="Sun-Panel服务器、NAS导航面板、Homepage、浏览器首页"
+		local docker_describe="Sun-Panel伺服器、NAS導覽面板、Homepage、瀏覽器首頁"
 		local docker_url="官網介紹: https://doc.sun-panel.top/zh_cn/"
 		local docker_use="echo \"帳號: admin@sun.cc 密碼: 12345678\""
 		local docker_passwd=""
@@ -13738,7 +13738,7 @@ while true; do
 		local app_id="99"
 
 		local app_name="dsm群暉虛擬機"
-		local app_text="Docker容器中的虚拟DSM"
+		local app_text="Docker容器中的虛擬DSM"
 		local app_url="官網:${gh_https_url}github.com/vdsm/virtual-dsm"
 		local docker_name="dsm"
 		local docker_port="8099"
@@ -13822,7 +13822,7 @@ while true; do
 	  101|moneyprinterturbo)
 		local app_id="101"
 		local app_name="AI影片產生工具"
-		local app_text="MoneyPrinterTurbo是一款使用AI大模型合成高清短视频的工具"
+		local app_text="MoneyPrinterTurbo是一款使用AI大模型合成高清短影片的工具"
 		local app_url="官方網站:${gh_https_url}github.com/harry0703/MoneyPrinterTurbo"
 		local docker_name="moneyprinterturbo"
 		local docker_port="8101"
@@ -14648,7 +14648,7 @@ net_menu() {
 		show_nics
 		echo
 		echo "=========== 網路卡管理選單 ==========="
-		echo "1. 启用网卡"
+		echo "1. 啟用網卡"
 		echo "2. 停用網路卡"
 		echo "3. 查看網卡詳細信息"
 		echo "4. 刷新網卡資訊"
@@ -15192,7 +15192,7 @@ EOF
 						send_stats "SSH連接埠已修改"
 						new_ssh_port $new_port
 					elif [[ $new_port -eq 0 ]]; then
-						send_stats "退出SSH連接埠修改"
+						send_stats "退出SSH埠修改"
 						break
 					else
 						echo "連接埠號碼無效，請輸入1到65535之間的數字。"
@@ -16247,7 +16247,7 @@ linux_file() {
 				send_stats "壓縮檔案/目錄"
 				;;
 			22) # 解压文件/目录
-				read -e -p "請輸入要解壓縮的檔名 (.tar.gz):" filename
+				read -e -p "請輸入要解壓縮的檔案名稱 (.tar.gz):" filename
 				install tar
 				tar -xzvf "$filename" && echo "已解壓縮$filename" || echo "解壓縮失敗"
 				send_stats "解壓縮檔案/目錄"
@@ -16672,7 +16672,7 @@ while true; do
 			CheckFirstRun_true
 			yinsiyuanquan2
 			cp -f ~/kejilion.sh /usr/local/bin/k > /dev/null 2>&1
-			echo -e "${gl_lv}腳本已更新至最新版本！${gl_huang}v$sh_v_new${gl_bai}"
+			echo -e "${gl_lv}腳本已更新到最新版本！${gl_huang}v$sh_v_new${gl_bai}"
 			send_stats "腳本已經最新$sh_v_new"
 			break_end
 			~/kejilion.sh

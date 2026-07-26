@@ -348,7 +348,7 @@ enable() {
 
 break_end() {
 	  echo -e "${gl_lv}操作完成${gl_bai}"
-	  echo "按任意键继续..."
+	  echo "按任意鍵繼續..."
 	  read -n 1 -s -r -p ""
 	  echo ""
 	  clear
@@ -785,7 +785,7 @@ docker_ipv6_off() {
 
 	# 檢查設定檔是否存在
 	if [ ! -f "$CONFIG_FILE" ]; then
-		echo -e "${gl_hong}配置文件不存在${gl_bai}"
+		echo -e "${gl_hong}設定檔不存在${gl_bai}"
 		return
 	fi
 
@@ -1465,7 +1465,7 @@ install_ssltls_text() {
 	cat /etc/letsencrypt/live/$yuming/privkey.pem
 	echo ""
 	echo -e "${gl_huang}證書存放路徑${gl_bai}"
-	echo "公鑰: /etc/letsencrypt/live/$yuming/fullchain.pem"
+	echo "公钥: /etc/letsencrypt/live/$yuming/fullchain.pem"
 	echo "私鑰: /etc/letsencrypt/live/$yuming/privkey.pem"
 	echo ""
 }
@@ -1534,7 +1534,7 @@ certs_status() {
 		send_stats "網域證書申請成功"
 	else
 		send_stats "網域證書申請失敗"
-		echo -e "${gl_hong}注意:${gl_bai}證書申請失敗，請檢查以下可能原因並重試："
+		echo -e "${gl_hong}注意:${gl_bai}证书申请失败，请检查以下可能原因并重试："
 		echo -e "1. 網域拼字錯誤 ➠ 請檢查網域名稱輸入是否正確"
 		echo -e "2. DNS解析問題 ➠ 確認網域名稱已正確解析至本伺服器IP"
 		echo -e "3. 網路設定問題 ➠ 如使用Cloudflare Warp等虛擬網路請暫時關閉"
@@ -1563,7 +1563,7 @@ certs_status() {
 
 			mkdir -p /home/web/certs
 
-			# 1. 輸入憑證 (ECC 和 RSA 憑證開頭都是 BEGIN CERTIFICATE)
+			# 1. 输入证书 (ECC 和 RSA 证书开头都是 BEGIN CERTIFICATE)
 			echo "請貼上 證書 (CRT/PEM) 內容 (以兩次回車結束)："
 			local cert_content=""
 			while IFS= read -r line; do
@@ -1985,7 +1985,7 @@ nginx_br() {
 		sed -i '/brotli_types/,+6 s/^\(\s*\)#\s*/\1/' /home/web/nginx.conf
 
 	elif [ "$mode" == "off" ]; then
-		# 關閉 Brotli：加上註釋
+		# 关闭 Brotli：加上注释
 		sed -i 's|^load_module /etc/nginx/modules/ngx_http_brotli_filter_module.so;|# load_module /etc/nginx/modules/ngx_http_brotli_filter_module.so;|' /home/web/nginx.conf > /dev/null 2>&1
 		sed -i 's|^load_module /etc/nginx/modules/ngx_http_brotli_static_module.so;|# load_module /etc/nginx/modules/ngx_http_brotli_static_module.so;|' /home/web/nginx.conf > /dev/null 2>&1
 
@@ -2116,7 +2116,7 @@ web_security() {
 			  echo "5. 查看SSH攔截記錄 6. 查看網站攔截記錄"
 			  echo "7. 檢視防禦規則清單 8. 查看日誌即時監控"
 			  echo "------------------------"
-			  echo "11. 配置拦截参数                  12. 清除所有拉黑的IP"
+			  echo "11. 設定攔截參數 12. 清除所有拉黑的IP"
 			  echo "------------------------"
 			  echo "21. cloudflare模式 22. 高負載開啟5秒盾"
 			  echo "------------------------"
@@ -2192,7 +2192,7 @@ web_security() {
 					  remove fail2ban
 					  rm -rf /etc/fail2ban
 					  crontab -l | grep -v "CF-Under-Attack.sh" | crontab - 2>/dev/null
-					  echo "Fail2Ban防御程序已卸载"
+					  echo "Fail2Ban防禦程序已卸載"
 					  break
 					  ;;
 
@@ -4068,7 +4068,7 @@ EOF
 }
 
 add_forwarding_service() {
-	send_stats "添加frp内网服务"
+	send_stats "新增frp內網服務"
 	# 提示使用者輸入服務名稱和轉發訊息
 	read -e -p "請輸入服務名稱:" service_name
 	read -e -p "請輸入轉送類型 (tcp/udp) [回​​車預設tcp]:" service_type
@@ -4466,7 +4466,7 @@ yt_menu_pro() {
 		echo "1. 安裝 2. 更新 3. 卸載"
 		echo "-------------------------"
 		echo "5. 單一影片下載 6. 大量影片下載 7. 自訂參數下載"
-		echo "8.  下载为MP3音频      9.  删除视频目录       10. Cookie管理（开发中）"
+		echo "8. 下載為MP3音訊 9.刪除影片目錄 10. Cookie管理（開發中）"
 		echo "-------------------------"
 		echo "0. 返回上一級選單"
 		echo "-------------------------"
@@ -5768,7 +5768,7 @@ clamav_scan() {
 		MOUNT_PARAMS+="--mount type=bind,source=${dir},target=/mnt/host${dir} "
 	done
 
-	# 构建 clamscan 命令参数
+	# 建構 clamscan 指令參數
 	local SCAN_PARAMS=""
 	for dir in "$@"; do
 		SCAN_PARAMS+="/mnt/host${dir} "
@@ -5850,11 +5850,11 @@ clamav() {
 
 
 
-# 高性能模式优化函数
+# 高效能模式最佳化函數
 optimize_high_performance() {
 	echo -e "${gl_lv}切換到${tiaoyou_moshi}...${gl_bai}"
 
-	echo -e "${gl_lv}优化文件描述符...${gl_bai}"
+	echo -e "${gl_lv}優化檔案描述符...${gl_bai}"
 	ulimit -n 65535
 
 	echo -e "${gl_lv}優化虛擬記憶體...${gl_bai}"
@@ -6134,7 +6134,7 @@ root_use
 send_stats "切換系統語言"
 while true; do
   clear
-  echo "当前系统语言: $LANG"
+  echo "當前系統語言:$LANG"
   echo "------------------------"
   echo "1. 英文 2. 簡體中文 3. 繁體中文"
   echo "------------------------"
@@ -7093,7 +7093,7 @@ rsync_manager() {
 
 	while true; do
 		clear
-		echo "Rsync 远程同步工具"
+		echo "Rsync 遠端同步工具"
 		echo "遠端目錄之間同步，支援增量同步，高效穩定。"
 		echo "---------------------------------"
 		list_tasks
@@ -7179,7 +7179,7 @@ linux_info() {
 
 	local swap_info=$(free -m | awk 'NR==3{used=$3; total=$2; if (total == 0) {percentage=0} else {percentage=used*100/total}; printf "%dM/%dM (%d%%)", used, total, percentage}')
 
-	local runtime=$(cat /proc/uptime | awk -F. '{run_days=int($1 / 86400);run_hours=int(($1 % 86400) / 3600);run_minutes=int(($1 % 3600) / 60); if (run_days > 0) printf("%d天 ", run_days); if (run_hours > 0) printf("%d时 ", run_hours); printf("%d分\n", run_minutes)}')
+	local runtime=$(cat /proc/uptime | awk -F. '{run_days=int($1 / 86400);run_hours=int(($1 % 86400) / 3600);run_minutes=int(($1% 3600) / 60); if (run_days > 0) printf("%d天 ", run_days); if (run_hours > 0) printf("%d時 ", run_hours); printf("%d分\n", run_minutes)}')
 
 	local timezone=$(current_timezone)
 
@@ -7345,7 +7345,7 @@ linux_tools() {
 			  clear
 			  echo "工具已安裝，使用方法如下："
 			  socat -h
-			  send_stats "安装socat"
+			  send_stats "安裝socat"
 			  ;;
 			5)
 			  clear
@@ -7759,7 +7759,7 @@ docker_ssh_migration() {
 				# 檢查該 compose 項目的容器是否已在運作
 				running_count=$(docker ps --filter "label=com.docker.compose.project=$project_name" --format '{{.Names}}' | wc -l)
 				if [[ "$running_count" -gt 0 ]]; then
-					echo -e "${gl_huang}Compose 項目 [$project_name] 已有容器在運行，跳過還原...${gl_bai}"
+					echo -e "${gl_huang}Compose 項目 [$project_name] 已有容器在运行，跳过还原...${gl_bai}"
 					continue
 				fi
 
@@ -8315,7 +8315,7 @@ linux_test() {
 			  echo "廣州電信: 58.60.188.222"
 			  echo "廣州聯通: 210.21.196.6"
 			  echo "廣州移動: 120.196.165.24"
-			  echo "成都电信: 61.139.2.69"
+			  echo "成都電信: 61.139.2.69"
 			  echo "成都聯通: 119.6.6.6"
 			  echo "成都移動: 211.137.96.205"
 			  echo "湖南電信: 36.111.200.100"
@@ -8403,7 +8403,7 @@ linux_Oracle() {
 	  echo -e "甲骨文雲腳本合集"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}1.   ${gl_bai}安裝閒置機器活躍腳本"
-	  echo -e "${gl_kjlan}2.   ${gl_bai}卸载闲置机器活跃脚本"
+	  echo -e "${gl_kjlan}2.   ${gl_bai}卸載閒置機器活躍腳本"
 	  echo -e "${gl_kjlan}------------------------"
 	  echo -e "${gl_kjlan}3.   ${gl_bai}DD重裝系統腳本"
 	  echo -e "${gl_kjlan}4.   ${gl_bai}R探長開機腳本"
@@ -9210,7 +9210,7 @@ linux_ldnmp() {
 
 	  27)
 	  clear
-	  webname="AI绘画提示词生成器"
+	  webname="AI繪畫提示詞產生器"
 	  send_stats "安裝$webname"
 	  echo "開始部署$webname"
 	  add_yuming
@@ -9639,7 +9639,7 @@ moltbot_menu() {
 		if [ "$local_version" != "$remote_version" ]; then
 			echo "${gl_huang}偵測到新版本:$remote_version${gl_bai}"
 		else
-			echo "${gl_lv}当前版本已是最新:$local_version${gl_bai}"
+			echo "${gl_lv}目前版本已是最新:$local_version${gl_bai}"
 		fi
 	}
 
@@ -10071,7 +10071,7 @@ EOF
 
 			# 2. 檢查系統是否已預先安裝（防止 duplicate id 衝突）
 			if [ -d "/usr/lib/node_modules/openclaw/extensions/$plugin_name" ]; then
-				echo "💡 检测到系统目录已存在该插件，正在直接激活..."
+				echo "💡 偵測到系統目錄已存在該插件，正在直接啟動..."
 				openclaw plugins enable "$plugin_name"
 			else
 				echo "📥 正在透過官方管道下載安裝插件..."
@@ -10124,7 +10124,7 @@ EOF
 			echo "- [nostr] # 加密隱私聊天"
 			echo "--------------------------------------------------------"
 
-			read -e -p "请输入插件 ID（输入 0 退出）： " raw_input
+			read -e -p "請輸入外掛 ID（輸入 0 退出）：" raw_input
 
 			[ "$raw_input" = "0" ] && break
 			[ -z "$raw_input" ] && continue
@@ -10556,7 +10556,7 @@ while true; do
 	  echo -e "${gl_kjlan}97.  ${color97}WireGuard組網(服務端)${gl_kjlan}98.  ${color98}WireGuard組網(客戶端)"
 	  echo -e "${gl_kjlan}99.  ${color99}DSM群暉虛擬機${gl_kjlan}100. ${color100}Syncthing點對點檔案同步工具"
 	  echo -e "${gl_kjlan}-------------------------"
-	  echo -e "${gl_kjlan}101. ${color101}AI影片生成工具${gl_kjlan}102. ${color102}VoceChat多人線上聊天系統"
+	  echo -e "${gl_kjlan}101. ${color101}AI影片產生工具${gl_kjlan}102. ${color102}VoceChat多人線上聊天系統"
 	  echo -e "${gl_kjlan}103. ${color103}Umami網站統計工具${gl_kjlan}104. ${color104}Stream四層代理轉送工具"
 	  echo -e "${gl_kjlan}105. ${color105}思源筆記${gl_kjlan}106. ${color106}Drawnix開源白板工具"
 	  echo -e "${gl_kjlan}107. ${color107}PanSou網盤搜尋${gl_kjlan}108. ${color108}LangBot聊天機器人"
@@ -11881,7 +11881,7 @@ while true; do
 
 		}
 
-		local docker_describe="nexterm是一款强大的在线SSH/VNC/RDP连接工具。"
+		local docker_describe="nexterm是一款強大的線上SSH/VNC/RDP連線工具。"
 		local docker_url="官網介紹:${gh_proxy}github.com/gnmyt/Nexterm"
 		local docker_use=""
 		local docker_passwd=""
@@ -11992,7 +11992,7 @@ while true; do
 			ip_address
 			echo "已經安裝完成"
 			check_docker_app_ip
-			echo "初始使用者名稱密碼均為: admin"
+			echo "初始使用者名稱密碼皆為: admin"
 		}
 
 		docker_app_update() {
@@ -12579,7 +12579,7 @@ while true; do
 		}
 
 		local docker_describe="開源AI聊天機器人框架，支援微信，QQ，TG接入AI大模型"
-		local docker_url="官网介绍: https://astrbot.app/"
+		local docker_url="官網介紹: https://astrbot.app/"
 		local docker_use="echo \"使用者名稱: astrbot 密碼: astrbot\""
 		local docker_passwd=""
 		local app_size="1"
@@ -13821,7 +13821,7 @@ while true; do
 
 	  101|moneyprinterturbo)
 		local app_id="101"
-		local app_name="AI影片生成工具"
+		local app_name="AI影片產生工具"
 		local app_text="MoneyPrinterTurbo是一款使用AI大模型合成高清短影片的工具"
 		local app_url="官方網站:${gh_https_url}github.com/harry0703/MoneyPrinterTurbo"
 		local docker_name="moneyprinterturbo"
@@ -14649,7 +14649,7 @@ net_menu() {
 		echo
 		echo "=========== 網路卡管理選單 ==========="
 		echo "1. 啟用網卡"
-		echo "2. 禁用网卡"
+		echo "2. 停用網路卡"
 		echo "3. 查看網卡詳細信息"
 		echo "4. 刷新網卡資訊"
 		echo "0. 返回上一級選單"
@@ -15819,7 +15819,7 @@ EOF
 			  echo "TG-bot監控預警功能"
 			  echo "影片介紹: https://youtu.be/vLL-eb3Z_TY"
 			  echo "------------------------------------------------"
-			  echo "您需要設定tg機器人API和接收預警的用戶ID，即可實現本機CPU，內存，硬碟，流量，SSH登入的即時監控預警"
+			  echo "您需要設定tg機器人API和接收預警的使用者ID，即可實現本機CPU，內存，硬碟，流量，SSH登入的即時監控預警"
 			  echo "到達閾值後會向用戶發送預警訊息"
 			  echo -e "${gl_hui}-關於流量，重啟伺服器將重新計算-${gl_bai}"
 			  read -e -p "確定繼續嗎？ (Y/N):" choice

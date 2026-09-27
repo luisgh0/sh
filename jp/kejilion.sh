@@ -10074,7 +10074,7 @@ EOF
 				echo "💡 检测到系统目录已存在该插件，正在直接激活..."
 				openclaw plugins enable "$plugin_name"
 			else
-				echo "📥 公式チャネルを通じてプラグインをダウンロードしてインストールしています..."
+				echo "📥 正在通过官方渠道下载安装插件..."
 				# 使用 openclaw 自己的 install 命令，它会自动处理 package.json 的规范检查
 				openclaw plugins install "$plugin_name"
 
